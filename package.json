@@ -1,0 +1,24 @@
+{
+  "name": "basic-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bojidar00/Basic-Wallet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bojidar00/Basic-Wallet/issues"
+  },
+  "homepage": "https://github.com/Bojidar00/Basic-Wallet#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "crypto-js": "^4.1.1",
+    "elliptic": "^6.5.4"
+  }
+}
