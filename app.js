@@ -10,6 +10,7 @@ const rl = readline.createInterface({
 });
 
 
+
 (function menu(){
 rl.question("Menu \n1 - Generate keys\n2 - Send Transaction\n",
 function(choice) {if(choice==='1'){
@@ -22,13 +23,13 @@ else if(choice==='2'){
         rl.question("Recipient:", function(recipient) {
             rl.question("Amount:", function(amount) {
                 var time=Date.now();
-                var hash =SHA256(time+sender+recipient+amount).toString();
-                console.log(hash);
+                var hash =SHA256(JSON.stringify(time+sender+recipient+amount)).toString();
                 rl.question("Private key:", function(privateKey) {
                     var key = ec.keyFromPrivate(privateKey, 'hex');
                     var signature = key.sign(hash);
-                    isValid(sender,hash,signature);
-                   // sendRequest(time,sender,recipient,amount,signature);
+                   // isValid(sender,hash,signature);
+                    sendRequest(time,sender,recipient,amount,signature);
+                    
                 });
             });
         });
@@ -36,12 +37,12 @@ else if(choice==='2'){
 }});}());
 
 function sendRequest(time,sender,recipient,amount,signature){
-    axios.post('/user', {
-        time:time,
+    axios.post('http://localhost:1337/addtransaction', {
+        timestamp:time,
         fromAddress: sender,
         toAddress: recipient,
         amount:amount,
-        signature:signature,
+        signature:JSON.stringify(signature),
       })
       .then(function (response) {
         console.log(response);
@@ -52,17 +53,7 @@ function sendRequest(time,sender,recipient,amount,signature){
 }
 
 function isValid(fromAddress,hash, signature){
-    
-    
-    
-   
-    //var pub = fromAddress.encode('hex');                                 
-    
-    
-    // Import public key
+  
     var key = ec.keyFromPublic(fromAddress, 'hex');
-    
-    
-    
     console.log(key.verify(hash, signature));
 }
